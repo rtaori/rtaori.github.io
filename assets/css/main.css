@@ -3557,10 +3557,13 @@
 				height: auto;
 				min-height: 0;
 			}
-
-				#banner .fill img {
-					width: 27%;
+				#banner .fill {
+					padding-bottom: 5%
 				}
+
+					#banner .fill img {
+						width: 27%;
+					}
 
 				#banner h2 {
 					font-size: 1.25em;
