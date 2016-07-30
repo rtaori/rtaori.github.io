@@ -3545,6 +3545,14 @@
 		}
 
 		@media screen and (max-width: 980px) {
+			#banner .more {
+				height: 8.5em;
+			}
+
+			#banner .more:after {
+				height: 3.5em;
+			}
+
 			#banner .fill img {
 				width: 20%;
 			}
