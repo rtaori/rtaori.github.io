@@ -3396,6 +3396,21 @@
 		text-align: center;
 	}
 
+		#banner .fill {
+		    display:flex;
+			justify-content:center;
+			align-items:center;
+			overflow:hidden;
+			padding-bottom: 2%;
+    	}
+
+    		#banner .fill img {
+				border-radius: 50%;
+			    flex-shrink:0;
+			    max-height: 15%;
+			    max-width: 15%;
+    		}
+
 		#banner h2 {
 			-moz-transform: scale(1);
 			-webkit-transform: scale(1);
