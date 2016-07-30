@@ -3534,6 +3534,13 @@
 			opacity: 0;
 		}
 
+		@media screen and (max-width: 980px) {
+			#banner .fill img {
+				min-width: 20%;
+				min-height: 20%;
+			}
+		}
+
 		@media screen and (max-width: 736px) {
 
 			#banner {
@@ -3541,6 +3548,11 @@
 				height: auto;
 				min-height: 0;
 			}
+
+				#banner .fill img {
+					min-width: 27%;
+					min-height: 27%;
+				}
 
 				#banner h2 {
 					font-size: 1.25em;
