@@ -2641,7 +2641,7 @@
 		}
 
 		.wrapper.style1 {
-			background-color: #21b2a6;
+			background-color: #375890;
 			color: #c7ebe8;
 		}
 
@@ -3160,7 +3160,7 @@
 		-ms-transition: -ms-transform 0.5s ease;
 		transition: transform 0.5s ease;
 		-webkit-overflow-scrolling: touch;
-		background: #21b2a6;
+		background: #375890;
 		color: #ffffff;
 		height: 100%;
 		max-width: 80%;
@@ -3341,7 +3341,6 @@
 
 								#header nav > ul > li > a.menuToggle {
 									padding: 0 1.5em;
-                                    display: inline;
 								}
 
 									#header nav > ul > li > a.menuToggle span {
@@ -3612,28 +3611,29 @@
 
 /* CTA */
 
-	#cta .inner {
+	#cta1 .inner, #cta2 .inner, #cta3 .inner, #cta4 .inner {
 		display: -moz-flex;
 		display: -webkit-flex;
 		display: -ms-flex;
 		display: flex;
 		max-width: 45em;
+        text-align: center;
 	}
 
-		#cta .inner header {
+		#cta1 .inner header, #cta2 .inner header, #cta3 .inner header, #cta4 .inner header {
 			-moz-order: 1;
 			-webkit-order: 1;
 			-ms-order: 1;
 			order: 1;
-			padding-right: 3em;
-			width: 70%;
+			padding-right: 0;
+			width: 100%;
 		}
 
-			#cta .inner header p {
+			#cta1 .inner header p, #cta2 .inner header p, #cta3 .inner header p, #cta4 .inner header p {
 				color: inherit;
 			}
 
-		#cta .inner .actions {
+		#cta1 .inner .actions, #cta2 .inner .actions, #cta3 .inner .actions, #cta4 .inner .actions {
 			-moz-order: 2;
 			-webkit-order: 2;
 			-ms-order: 2;
@@ -3643,17 +3643,16 @@
 
 		@media screen and (max-width: 980px) {
 
-			#cta .inner {
+            #cta1 .inner, #cta2 .inner, #cta3 .inner, #cta4 .inner {
 				display: block;
-				text-align: center;
 			}
 
-				#cta .inner header {
+				#cta1 .inner header, #cta2 .inner header, #cta3 .inner header, #cta4 .inner header {
 					padding-right: 0;
 					width: 100%;
 				}
 
-				#cta .inner .actions {
+				#cta1 .inner .actions, #cta2 .inner .actions, #cta3 .inner .actions, #cta4 .inner .actions {
 					margin-left: auto;
 					margin-right: auto;
 					max-width: 20em;
@@ -3664,7 +3663,7 @@
 
 		@media screen and (max-width: 736px) {
 
-			#cta .inner .actions {
+			#cta1 .inner .actions, #cta2 .inner .actions, #cta3 .inner .actions, #cta4 .inner .actions {
 				max-width: none;
 			}
 
@@ -3745,7 +3744,7 @@
 /* Footer */
 
 	#footer {
-		padding: 6em 0 4em 0 ;
+		padding: 4em 0 2em 0 ;
 		background-color: #1d242a;
 		text-align: center;
 	}
