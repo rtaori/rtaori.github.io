@@ -3341,6 +3341,7 @@
 
 								#header nav > ul > li > a.menuToggle {
 									padding: 0 1.5em;
+                                    display: inline;
 								}
 
 									#header nav > ul > li > a.menuToggle span {
@@ -3578,7 +3579,6 @@
 				}
 
 				#banner br {
-					display: none;
 				}
 
 				#banner .more {
