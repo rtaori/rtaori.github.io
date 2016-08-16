@@ -2239,12 +2239,12 @@
 		color: #fff;
 		cursor: pointer;
 		display: inline-block;
-		font-size: 0.8em;
+		font-size: 1.1em;
 		font-weight: 600;
-		height: 3.125em;
+		height: 3.2em;
 		letter-spacing: 0.225em;
 		line-height: 3.125em;
-		padding: 0 2.75em;
+		padding: 0 1.5em;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
@@ -2252,6 +2252,10 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+    
+        #two > section > div.content > ul > li > a > span {
+            font-size: 0.8em;
+        }   
 
 		input[type="submit"]:hover,
 		input[type="reset"]:hover,
@@ -2569,11 +2573,11 @@
 		@media screen and (max-width: 1280px) {
 
 			.spotlight .image {
-				width: 45%;
+				width: 35%;
 			}
 
 			.spotlight .content {
-				width: 55%;
+				width: 65%;
 			}
 
 		}
@@ -3170,7 +3174,7 @@
 		-ms-transition: -ms-transform 0.5s ease;
 		transition: transform 0.5s ease;
 		-webkit-overflow-scrolling: touch;
-		background: #375890;
+		background: #303D44;
 		color: #ffffff;
 		height: 100%;
 		max-width: 80%;
