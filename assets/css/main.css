@@ -3754,10 +3754,10 @@
 /* Footer */
 
 	#footer {
-		padding: 3em 0 2em 0 ;
+		padding: 2em 0 1em 0 ;
 		background-color: #1d242a;
 		text-align: center;
-        line-height: 4em;
+        line-height: 3.5em;
 	}
 
 		#footer .icons {
