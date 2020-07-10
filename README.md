@@ -1,2 +1,2 @@
 # rtaori.github.io
-My personal website! Go to http://rohantaori.com
+My personal website! Go to https://rohantaori.com
