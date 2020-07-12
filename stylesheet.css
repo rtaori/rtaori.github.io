@@ -130,3 +130,7 @@ name {
 span.highlight {
   background-color: #ffffd0;
 }
+
+li {
+    /*margin-bottom: 5px;*/
+}
