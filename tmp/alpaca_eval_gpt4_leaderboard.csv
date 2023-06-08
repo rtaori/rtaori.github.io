@@ -2,7 +2,7 @@ name,win_rate,link,filter
 GPT-4,95.27950310559004,,minimal
 Claude,88.38509316770187,,minimal
 ChatGPT,86.08695652173914,,minimal
-WizardLM 13B,75.31094527363184,https://huggingface.co/WizardLM/WizardLM-13B-1.0,verified
+WizardLM 13B,75.31094527363184,https://huggingface.co/WizardLM/WizardLM-13B-1.0,minimal
 Guanaco 65B,71.80124223602485,https://huggingface.co/timdettmers/guanaco-65b,minimal
 Vicuna 13B,70.43478260869566,https://huggingface.co/lmsys/vicuna-13b-delta-v1.1,minimal
 LLaMA 33B OASST RLHF,66.52173913043478,https://huggingface.co/OpenAssistant/oasst-rlhf-2-llama-30b-7k-steps-xor,minimal
