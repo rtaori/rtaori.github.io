@@ -56,8 +56,7 @@
                     Previously, I graduated with my BS in <a href="https://eecs.berkeley.edu/">EECS</a> from UC
                     Berkeley.
                     I am very fortunate to have worked with <a href="https://people.csail.mit.edu/ludwigs/">Ludwig
-                      Schmidt</a> & <a href="https://people.eecs.berkeley.edu/~brecht/">Ben Recht</a> during my time
-                    there.
+                      Schmidt</a> during my time there.
                     I also had an amazing time teaching at and interacting with the <a
                       href="https://ml.berkeley.edu/">Machine Learning @ Berkeley</a> community.
                   </p>
@@ -86,189 +85,262 @@
                   <heading>Research Stuff</heading>
                 </td>
               </tr>
-            </tbody>
-          </table>
-
-          <table
-            style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-            <tbody>
               <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Benchmarking Multi-Domain Active Learning on Image Classification
-                    Use </papertitle>
-                  <br>
-                  Jiayi Li, Rohan Taori, Tatsunori B Hashimoto
-                  <br>
-                  <a href="https://arxiv.org/abs/2312.00364">Paper</a>
+                <td style="text-align:left;padding-left:10px;">
+                  <style>
+                    .selectedButton {
+                      background-color: #4CAF50; /* Green */
+                      color: white;
+                    }
+                  </style>
+                  <button id="allButton" class="selectedButton" onclick="filterPapers('all'); highlightButton('allButton')">All</button>
+                  <button id="highlightsButton" onclick="filterPapers('highlights'); highlightButton('highlightsButton')">Highlights</button>
+                  <script>
+                    function highlightButton(buttonId) {
+                      document.getElementById('allButton').classList.remove('selectedButton');
+                      document.getElementById('highlightsButton').classList.remove('selectedButton');
+                      document.getElementById(buttonId).classList.add('selectedButton');
+                    }
+                    // Call highlightButton on page load to ensure "All" button is highlighted by default
+                    document.addEventListener('DOMContentLoaded', function() {
+                      highlightButton('allButton');
+                    }, false);
+                  </script>
                 </td>
               </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>VisIT-Bench: A Benchmark for Vision-Language Instruction Following Inspired by Real-World
-                    Use </papertitle>
-                  <br>
-                  Yonatan Bitton*, Hritik Bansal*, Jack Hessel*, Rulin Shao, Wanrong Zhu, Anas Awadalla, Josh Gardner,
-                  Rohan Taori, Ludwig Schimdt
-                  <br>
-                  <em>Benchmarks and Datasets Track, NeurIPS, 2023.</em>
-                  <br>
-                  <a href="https://arxiv.org/abs/2308.06595">Paper</a> &nbsp/&nbsp
-                  <a href="https://visit-bench.github.io/">Website</a> &nbsp/&nbsp
-                  <a href="https://github.com/mlfoundations/VisIT-Bench/">Code & Data</a>
-                </td>
-              </tr>
+          <div id="papersList">
+            <table
+              style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+              <tbody>
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>An Interactive Agent Foundation Model</papertitle>
+                    <br>
+                    Zane Durante, Bidipta Sarkar, Ran Gong, Rohan Taori, ...&lt;et al&gt;..., Fei-Fei Li, Jianfeng Gao, Naoki Wake, Qiuyuan Huang
+                    <br>
+                    <a href="https://arxiv.org/abs/2402.05929">Paper</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>AlpacaEval: An Automatic Evaluator for Instruction-following Language Models</papertitle>
-                  <br>
-                  Tianyi Zhang*, Xuechen Li*, Yann Dubois*, Rohan Taori*, Ishaan Gulrajani, Jimmy Ba, Carlos Guestrin,
-                  Percy Liang, Tatsunori B Hashimoto
-                  <br>
-                  <a href="https://tatsu-lab.github.io/alpaca_eval/">Website</a> &nbsp/&nbsp
-                  <a href="https://github.com/tatsu-lab/alpaca_eval">Code & Data</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Agent AI: Surveying the Horizons of Multimodal Interaction</papertitle>
+                    <br>
+                    Zane Durante, Qiuyuan Huang, Naoki Wake, Ran Gong, Jae Sung Park, Bidipta Sarkar, Rohan Taori, ...&lt;et al&gt;..., Fei-Fei Li, Jianfeng Gao
+                    <br>
+                    <a href="https://arxiv.org/abs/2401.03568">Paper</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>AlpacaFarm: A Simulation Framework for Methods that Learn from Human Feedback</papertitle>
-                  <br>
-                  Yann Dubois*, Xuechen Li*, Rohan Taori*, Tianyi Zhang*, Ishaan Gulrajani, Jimmy Ba, Carlos Guestrin,
-                  Percy Liang, Tatsunori B Hashimoto
-                  <br>
-                  <em><b>Spotlight</b> at Advances in Neural Information Processing Systems (NeurIPS),
-                    2023.</em>
-                  <br>
-                  <a href="https://arxiv.org/abs/2305.14387">Paper</a> &nbsp/&nbsp
-                  <a href="https://crfm.stanford.edu/2023/05/22/alpaca-farm.html">Blog Post</a> &nbsp/&nbsp
-                  <a href="https://github.com/tatsu-lab/alpaca_farm">Code & Data</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Benchmarking Multi-Domain Active Learning on Image Classification
+                      Use </papertitle>
+                    <br>
+                    Jiayi Li, Rohan Taori, Tatsunori B Hashimoto
+                    <br>
+                    <a href="https://arxiv.org/abs/2312.00364">Paper</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Stanford Alpaca: A Strong, Replicable Instruction-Following Model</papertitle>
-                  <br>
-                  Rohan Taori*, Ishaan Gulrajani*, Tianyi Zhang*, Yann Dubois*, Xuechen Li*, Carlos
-                  Guestrin, Percy Liang, Tatsunori B Hashimoto
-                  <br>
-                  <a href="https://crfm.stanford.edu/2023/03/13/alpaca.html">Blog Post</a> &nbsp/&nbsp
-                  <a href="https://github.com/tatsu-lab/stanford_alpaca">Code & Data</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>VisIT-Bench: A Benchmark for Vision-Language Instruction Following Inspired by Real-World
+                      Use </papertitle>
+                    <br>
+                    Yonatan Bitton*, Hritik Bansal*, Jack Hessel*, Rulin Shao, Wanrong Zhu, Anas Awadalla, Josh Gardner,
+                    Rohan Taori, Ludwig Schimdt
+                    <br>
+                    <em>Benchmarks and Datasets Track, NeurIPS, 2023.</em>
+                    <br>
+                    <a href="https://arxiv.org/abs/2308.06595">Paper</a> &nbsp/&nbsp
+                    <a href="https://visit-bench.github.io/">Website</a> &nbsp/&nbsp
+                    <a href="https://github.com/mlfoundations/VisIT-Bench/">Code & Data</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Data Feedback Loops: Model-driven Amplification of Dataset Biases</papertitle>
-                  <br>
-                  Rohan Taori, Tatsunori B Hashimoto
-                  <br>
-                  <em><b>Oral</b> at International Conference on Machine Learning (ICML), 2023. <b>Spotlight</b> at
-                    NeurIPS Workshop on Distribution Shifts, 2022.</em>
-                  <br>
-                  <a href="https://arxiv.org/abs/2209.03942">Paper</a> &nbsp/&nbsp
-                  <a href="https://github.com/rtaori/data_feedback">Code</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>AlpacaEval: An Automatic Evaluator for Instruction-following Language Models</papertitle>
+                    <br>
+                    Tianyi Zhang*, Xuechen Li*, Yann Dubois*, Rohan Taori*, Ishaan Gulrajani, Jimmy Ba, Carlos Guestrin,
+                    Percy Liang, Tatsunori B Hashimoto
+                    <br>
+                    <a href="https://tatsu-lab.github.io/alpaca_eval/">Website</a> &nbsp/&nbsp
+                    <a href="https://github.com/tatsu-lab/alpaca_eval">Code & Data</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Is a Caption Worth a Thousand Images? A Controlled Study for Representation Learning
-                  </papertitle>
-                  <br>
-                  Shibani Santurkar, Yann Dubois, Rohan Taori, Percy Liang, Tatsunori B Hashimoto
-                  <br>
-                  <em>International Conference on Learning Representations (ICLR), 2023.</em>
-                  <br>
-                  <a href="https://arxiv.org/abs/2207.07635">Paper</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="true">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>AlpacaFarm: A Simulation Framework for Methods that Learn from Human Feedback</papertitle>
+                    <br>
+                    Yann Dubois*, Xuechen Li*, Rohan Taori*, Tianyi Zhang*, Ishaan Gulrajani, Jimmy Ba, Carlos Guestrin,
+                    Percy Liang, Tatsunori B Hashimoto
+                    <br>
+                    <em><b>Spotlight</b> at Advances in Neural Information Processing Systems (NeurIPS),
+                      2023.</em>
+                    <br>
+                    <a href="https://arxiv.org/abs/2305.14387">Paper</a> &nbsp/&nbsp
+                    <a href="https://crfm.stanford.edu/2023/05/22/alpaca-farm.html">Blog Post</a> &nbsp/&nbsp
+                    <a href="https://github.com/tatsu-lab/alpaca_farm">Code & Data</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Are We Learning Yet? A Meta Review of Evaluation Failures Across Machine Learning
-                  </papertitle>
-                  <br>
-                  Thomas Liao, Rohan Taori, Inioluwa Deborah Raji, Ludwig Schmidt
-                  <br>
-                  <em>Benchmarks and Datasets Track, NeurIPS, 2021.</em>
-                  <br>
-                  <a href="http://thomasliao.com/are_we_learning_yet.pdf">Paper</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="true">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Stanford Alpaca: A Strong, Replicable Instruction-Following Model</papertitle>
+                    <br>
+                    Rohan Taori*, Ishaan Gulrajani*, Tianyi Zhang*, Yann Dubois*, Xuechen Li*, Carlos
+                    Guestrin, Percy Liang, Tatsunori B Hashimoto
+                    <br>
+                    <a href="https://crfm.stanford.edu/2023/03/13/alpaca.html">Blog Post</a> &nbsp/&nbsp
+                    <a href="https://github.com/tatsu-lab/stanford_alpaca">Code & Data</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Accuracy on the Line: on the Strong Correlation Between Out-of-Distribution
-                    and In-Distribution Generalization</papertitle>
-                  <br>
-                  John Miller, Rohan Taori, Aditi Raghunathan, Shiori Sagawa, Pang Wei Koh, Vaishaal
-                  Shankar, Percy Liang, Yair Carmon, Ludwig Schmidt
-                  <br>
-                  <em>International Conference on Machine Learning (ICML), 2021.</em>
-                  <br>
-                  <a href="https://arxiv.org/abs/2107.04649">Paper</a> &nbsp/&nbsp
-                  <a
-                    href="https://slideslive.com/38959063/accuracy-on-the-line-on-the-strong-correlation-between-outofdistribution-and-indistribution-generalization">Talk</a>
-                  &nbsp/&nbsp
-                  <a href="https://share.streamlit.io/millerjohnp/linearfits_app/main/app.py">Interactive
-                    Plotting</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="true">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Data Feedback Loops: Model-driven Amplification of Dataset Biases</papertitle>
+                    <br>
+                    Rohan Taori, Tatsunori B Hashimoto
+                    <br>
+                    <em><b>Oral</b> at International Conference on Machine Learning (ICML), 2023. <b>Spotlight</b> at
+                      NeurIPS Workshop on Distribution Shifts, 2022.</em>
+                    <br>
+                    <a href="https://arxiv.org/abs/2209.03942">Paper</a> &nbsp/&nbsp
+                    <a href="https://github.com/rtaori/data_feedback">Code</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Measuring Robustness to Natural Distribution Shifts in Image Classification
-                  </papertitle>
-                  <br>
-                  Rohan Taori, Achal Dave, Vaishaal Shankar, Nicholas Carlini, Benjamin Recht, Ludwig
-                  Schmidt
-                  <br>
-                  <em><b>Spotlight</b> at Advances in Neural Information Processing Systems (NeurIPS),
-                    2020.</em>
-                  <br>
-                  <a href="https://arxiv.org/abs/2007.00644">Paper</a> &nbsp/&nbsp
-                  <a href="https://modestyachts.github.io/imagenet-testbed">Website</a> &nbsp/&nbsp
-                  <a
-                    href="https://slideslive.com/38937803/measuring-robustness-to-natural-distribution-shifts-in-image-classification">Talk</a>
-                  &nbsp/&nbsp
-                  <a href="https://github.com/modestyachts/imagenet-testbed">Code & Data</a> &nbsp/&nbsp
-                  <a href="http://robustness.imagenetv2.org/">Interactive Plotting</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Is a Caption Worth a Thousand Images? A Controlled Study for Representation Learning
+                    </papertitle>
+                    <br>
+                    Shibani Santurkar, Yann Dubois, Rohan Taori, Percy Liang, Tatsunori B Hashimoto
+                    <br>
+                    <em>International Conference on Learning Representations (ICLR), 2023.</em>
+                    <br>
+                    <a href="https://arxiv.org/abs/2207.07635">Paper</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Transposer: Universal Texture Synthesis Using Feature Maps as Transposed
-                    Convolution Filter</papertitle>
-                  <br>
-                  Guilin Liu, Rohan Taori, Ting-Chun Wang, Zhiding Yu, Shiqiu Liu, Fitsum Reda, Karan Sapra,
-                  Andrew Tao, Bryan Catanzaro
-                  <br>
-                  <em>Preprint, 2020.</em>
-                  <br>
-                  <a href="https://arxiv.org/abs/2007.07243">Paper</a> &nbsp/&nbsp
-                  <a href="https://www.youtube.com/watch?v=ej1NDiMT99g">Short Video</a> &nbsp/&nbsp
-                  <a href="https://www.youtube.com/watch?v=8Us9c5iBRCY">Long Video</a>
-                </td>
-              </tr>
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>On the Opportunities and Risks of Foundation Models
+                    </papertitle>
+                    <br>
+                    Rishi Bommasani, Drew A. Hudson, ...&lt;et al&gt;..., Rohan Taori, ...&lt;et al&gt;..., Percy Liang
+                    <br>
+                    <a href="https://arxiv.org/abs/2108.07258">Paper</a>
+                  </td>
+                </tr>
 
-              <tr>
-                <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
-                  <papertitle>Targeted Adversarial Examples for Black Box Audio Systems</papertitle>
-                  <br>
-                  Rohan Taori, Amog Kamsetty, Brenton Chu, Nikita Vemuri
-                  <br>
-                  <em>IEEE Deep Learning and Security Workshops, 2019.</em>
-                  <br>
-                  <a href="https://arxiv.org/abs/1805.07820">Paper</a> &nbsp/&nbsp
-                  <a href="https://github.com/rtaori/Black-Box-Audio">Code</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Are We Learning Yet? A Meta Review of Evaluation Failures Across Machine Learning
+                    </papertitle>
+                    <br>
+                    Thomas Liao, Rohan Taori, Inioluwa Deborah Raji, Ludwig Schmidt
+                    <br>
+                    <em>Benchmarks and Datasets Track, NeurIPS, 2021.</em>
+                    <br>
+                    <a href="http://thomasliao.com/are_we_learning_yet.pdf">Paper</a>
+                  </td>
+                </tr>
+
+                <tr class="paper" data-highlight="true">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Accuracy on the Line: on the Strong Correlation Between Out-of-Distribution
+                      and In-Distribution Generalization</papertitle>
+                    <br>
+                    John Miller, Rohan Taori, Aditi Raghunathan, Shiori Sagawa, Pang Wei Koh, Vaishaal
+                    Shankar, Percy Liang, Yair Carmon, Ludwig Schmidt
+                    <br>
+                    <em>International Conference on Machine Learning (ICML), 2021.</em>
+                    <br>
+                    <a href="https://arxiv.org/abs/2107.04649">Paper</a> &nbsp/&nbsp
+                    <a
+                      href="https://slideslive.com/38959063/accuracy-on-the-line-on-the-strong-correlation-between-outofdistribution-and-indistribution-generalization">Talk</a>
+                    &nbsp/&nbsp
+                    <a href="https://share.streamlit.io/millerjohnp/linearfits_app/main/app.py">Interactive
+                      Plotting</a>
+                  </td>
+                </tr>
+
+                <tr class="paper" data-highlight="true">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Measuring Robustness to Natural Distribution Shifts in Image Classification
+                    </papertitle>
+                    <br>
+                    Rohan Taori, Achal Dave, Vaishaal Shankar, Nicholas Carlini, Benjamin Recht, Ludwig
+                    Schmidt
+                    <br>
+                    <em><b>Spotlight</b> at Advances in Neural Information Processing Systems (NeurIPS),
+                      2020.</em>
+                    <br>
+                    <a href="https://arxiv.org/abs/2007.00644">Paper</a> &nbsp/&nbsp
+                    <a href="https://modestyachts.github.io/imagenet-testbed">Website</a> &nbsp/&nbsp
+                    <a
+                      href="https://slideslive.com/38937803/measuring-robustness-to-natural-distribution-shifts-in-image-classification">Talk</a>
+                    &nbsp/&nbsp
+                    <a href="https://github.com/modestyachts/imagenet-testbed">Code & Data</a> &nbsp/&nbsp
+                    <a href="http://robustness.imagenetv2.org/">Interactive Plotting</a>
+                  </td>
+                </tr>
+
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Transposer: Universal Texture Synthesis Using Feature Maps as Transposed
+                      Convolution Filter</papertitle>
+                    <br>
+                    Guilin Liu, Rohan Taori, Ting-Chun Wang, Zhiding Yu, Shiqiu Liu, Fitsum Reda, Karan Sapra,
+                    Andrew Tao, Bryan Catanzaro
+                    <br>
+                    <a href="https://arxiv.org/abs/2007.07243">Paper</a> &nbsp/&nbsp
+                    <a href="https://www.youtube.com/watch?v=ej1NDiMT99g">Short Video</a> &nbsp/&nbsp
+                    <a href="https://www.youtube.com/watch?v=8Us9c5iBRCY">Long Video</a>
+                  </td>
+                </tr>
+
+                <tr class="paper" data-highlight="false">
+                  <td style="padding:10px 20px 10px 10px;width:75%;vertical-align:middle">
+                    <papertitle>Targeted Adversarial Examples for Black Box Audio Systems</papertitle>
+                    <br>
+                    Rohan Taori, Amog Kamsetty, Brenton Chu, Nikita Vemuri
+                    <br>
+                    <em>IEEE Deep Learning and Security Workshops, 2019.</em>
+                    <br>
+                    <a href="https://arxiv.org/abs/1805.07820">Paper</a> &nbsp/&nbsp
+                    <a href="https://github.com/rtaori/Black-Box-Audio">Code</a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <script>
+            function filterPapers(filter) {
+              const papers = document.querySelectorAll('.paper');
+              papers.forEach(paper => {
+                switch(filter) {
+                  case 'all':
+                    paper.style.display = '';
+                    break;
+                  case 'highlights':
+                    if (paper.getAttribute('data-highlight') === 'true') {
+                      paper.style.display = '';
+                    } else {
+                      paper.style.display = 'none';
+                    }
+                    break;
+                }
+              });
+            }
+          </script>
 
           <table
             style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
