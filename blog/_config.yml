@@ -22,7 +22,7 @@ title: Rohan's Blog
 description: >- # this means to ignore newlines until "baseurl:"
   Rohan Taori's blog.
 baseurl: "/blog" # the subpath of your site, e.g. /blog
-url: "https://rohantaori.com" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://www.rohantaori.com/" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 theme: minima
