@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172347444-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-172347444-1");
+    </script>
+
+    <!-- Lightweight client-side loader that feature-detects and load polyfills only when necessary -->
+    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+
+    <!-- Load the element definition -->
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+
+    <title>Rohan's Blog</title>
+
+    <meta name="author" content="Rohan Taori" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body style="padding-top: 20px; padding-bottom: 40px">
+    <table
+      style="
+        width: 100%;
+        max-width: 800px;
+        border: 0px;
+        border-spacing: 0px;
+        border-collapse: separate;
+        margin-right: auto;
+        margin-left: auto;
+      "
+    >
+      <tbody>
+        <tr style="padding: 0px">
+          <td style="padding: 0px">
+            <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0px">
+              <h2>Rohan's Blog</h2>
+              <nav style="text-align: right">
+                <h2 style="display: inline; text-decoration: none">
+                  <a href="https://rohantaori.com" style="text-decoration: none">Home</a>
+                </h2>
+              </nav>
+            </header>
+            <zero-md>
+              <script type="text/markdown">
+                # Long Context and Pieces to the Video Playbook
+
+                Things in AI move fast. So fast, that it’s sometimes hard to step back and appreciate the bigger picture. Two weeks ago, three new models gave us a very concrete glimpse into the future: Google’s Gemini 1.5, OpenAI’s Sora, and the Large World Mode (LWM)l from Berkeley.
+
+                Gemini’s 1 million (up to 10 million?) context length is an order of magnitude bigger than what GPT-4 or Claude-2 can currently handle. It’s cool to use this new capability to do things like summarizing books or chatting with a large codebase. But the coolest demos were uploading a full one-hour YouTube video and asking the model to summarize and find details, or using the video to output key structured information.
+
+                Video and image understanding with an LLM just feel so powerful. The possibilities for new types of interactions with intelligence - the base LLM - are endless. Yet, they’re only the first multimodal unlocks on the path of many. We’re racing towards a future where a single model will be able to both ingest and output text, images, video, and audio.
+
+                In this short post, I’ll note a few important pieces for this potential unified model. I’ll mostly focus on video since it’s by far the most data intensive and will force us to really think about scaling context.
+                First, how did Gemini achieve 1-10 million context length?
+                As some have speculated, I believe Gemini is achieving a 1M native context length mostly likely through Ring Attention (and Flash Attention and other systems optimizations). In short, ring attention shards a transformer’s KV blocks in a way that is very well suited to the TPU’s torus design; this design prioritizes fast interconnects to neighboring nodes, over the all-to-all pattern commonly used for NVIDIA’s chips. This is not to say ring attention is not possible on GPUs, just probably suboptimal currently.
+
+                Being able to fine-tune at 1M+ tokens is what would give Gemini its impressive long-context reasoning capability (the 10M “experimental” context length is probably using an inference-time RoPE scaling trick). I’ll now talk about using this to ingest videos, limitations, and a potential solution.
+
+                ## Part 1: Long-form video understanding.
+
+                The video understanding demos from Gemini 1.5 and Large World Model are impressive, but I believe the final solution to this problem will involve incorporating new architectures like state space models (SSMs). First, let’s discuss how they currently work, then what its limitations are and how SSMs may fix them.
+
+                The recipe for building image-language models has somewhat standardized around the LLaVA method: pass the image through a pretrained CLIP encoder, add a few coupling layers between CLIP’s output and a pretrained LM’s input layer, and finetune everything end-to-end. This method effectively converts each image into a set of token embeddings (note this is different from LWM, which converts images into discrete tokens instead of dense embeddings, which has the downside of being less information dense); it’s a simple architecture, and I believe Gemini applies a similar method for videos. They encode every frame (at 1 FPS) individually, and pass the dense embeddings into the base LM (they probably trained a video encoder initialized from CLIP weights using an MAE or text-contrastive loss to better featurize the videos, but the idea remains the same).
+
+                So why is this unideal? Well, it’s difficult to process videos at a much longer scale. An hour long video already nearly maxes out the 1M context length; if you want to reason over days of video, or increase the sampling FPS to better capture motion, you would need heavy infrastructure investments in extremely long context to make it happen. However, this is exactly the issue that state space models like Mamba are set out to solve.
+
+                SSMs have had a lukewarm reception in the community so far, as they haven’t outperformed transformers on medium-length language tasks. This is actually somewhat expected! Recurrent architectures like SSMs need to summarize many tokens into one shared state; in an information-dense modality like language, this naturally means that a significant amount of information is lost.
+
+                Video, however, presents a very different problem. Video is definitely not information dense, with lots of repetition across frames and the most significant bits going into encoding low-level details like textures. This means that video is very amenable to being summarized by an SSM; imagine being able to process hours of video, at native 30 FPS. Or ongoing processing of a continual video stream. And still having reasonable response latency!
+
+                What would this look like, concretely? There are many possible solutions, but a simple one would be to pretrain an SSM-based video encoder (using a VAE, MAE, and/or a text-contrastive objective). This encoder would process the large video(s) and produce a much smaller set of output features to feed into the base LM, without much of a tradeoff in performance. (Stated this way, this sounds like a hard distinction between SSM layers and attention layers, but a group of labmates at Stanford are working on a unified perspective of the two :P)
+
+                ## Part 2: Video generation from the same model.
+
+                Now that we can process very long videos, the natural next step is to ask how we may output video using the same model. But Sora shows us that we have a scalable recipe for text->video generation, you may say. Why would we want a unified model?
+
+                A unified architecture means that we can have much more expressive generation. We saw how this was important in language for techniques like chain of thought or self-consistency - being able to trade inference compute for quality was a huge unlock. What does the equivalent look like for video generation? For example, we could ask the model to first generate what each of the main characters look like in a short film, and then ask it to create the rest of the film. Or create concepts for each shot first before stitching them together.
+
+                The other advantage is true flexibility in interaction. Instead of just text to video, you could also do image to video, video to video, video+text to video, etc. The possibilities are truly endless.
+
+                So, how do we get there? First, Sora shows that a well-trained video tokenizer matters. The encoder we discussed in Part 1 likely may work well for this as well. Second, what is the output interface for the model? The LWM approach is to output discrete video tokens autoregressively, but it does seem like the best generation models use diffusion as the core primitive instead of autoregressive generation. So, combining both of these approaches seems natural, and one possible exciting solution is to have the base LM output the video conditioning vectors that are then fed into a separate pretrained diffusion model to generate the final video.
+
+                ## Part 3: Datasets.
+
+                Both long-context video understanding and video generation require a dataset of videos with very detailed captions, which is actually pretty hard to come by on the internet. Things like InternVid10M, WebVid10M, or HowTo100M are large and diverse but suffer in caption quality. Recent open-source datasets - eg Video-ChatGPT or Valley-Instruct - use pipelines to filter and rewrite existing captions using ChatGPT, as well as collecting additional annotations on the videos through bounding box models. However, these datasets are currently fairly small, and it’s an open question how well this procedure scales. Sora took a slightly different approach - the blog states they first train a high-quality video captioner first, and then weakly label a bunch of videos to create the training set. This approach also makes a lot of sense, especially if you could collect human annotations for the smaller videos. Either way, improving on these partially-synthetic data pipelines will be increasingly important for video models in the future.
+
+                ## Concluding thoughts.
+
+                This blog was written mostly as a collection of ideas and opinions that I currently have. I’m very interested in training multimodal models, and these are a few concrete plans that would be interesting to execute. However - I am happy to be proven wrong! At the end of the day, experimentation and sticking to solid scaling laws science will dictate the way forward towards a unified architecture.
+              </script>
+            </zero-md>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
