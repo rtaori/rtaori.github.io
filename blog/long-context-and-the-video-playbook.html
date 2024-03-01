@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base target="_blank" />
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172347444-1"></script>
     <script>
@@ -63,7 +65,7 @@
 
                 Current models, including Gemini, still struggle to process a lot of video frames. The solution to reasoning over truly long video may involve incorporating new architectures like [state space models](https://arxiv.org/abs/2312.00752) (SSMs). To understand why, let’s first discuss the current vision-language model recipe, what its limitations are, and how SSMs may fix them.
 
-                Building a vision-language model has somewhat standardized around the [LLaVA method](https://llava-vl.github.io/): a sequence of frames is fed through an image or video encoder (usually based off CLIP), and the resulting features are then passed in as dense “tokens” to a pretrained LLM. Importantly, this means that the number of tokens the LLM needs to handle is directly proportional to the number of input frames, which can grow quickly<sup>1</sup>.
+                As in our [agent paper](https://arxiv.org/abs/2402.05929), building a vision-language model has somewhat standardized around the [LLaVA method](https://llava-vl.github.io/): a sequence of frames is fed through an image or video encoder (usually based off CLIP), and the resulting features are then passed in as dense “tokens” to a pretrained LLM. Importantly, this means that the number of tokens the LLM needs to handle is directly proportional to the number of input frames, which can grow quickly<sup>1</sup>.
 
                 How would adding an SSM fix this? SSMs, like any recurrent architecture, summarize many tokens into one shared state. In an information-dense modality like language, where all SSMs are currently applied, this naturally means that a significant amount of information is lost. Video, however, is definitely not information dense; it has lots of repetition across frames, and most significant bits encode low-level details like textures. This means that a video is very amenable to being summarized by an SSM - imagine being able to process a continual video stream, at 30 FPS, for hours!
 
