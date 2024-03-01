@@ -29,7 +29,7 @@
     <table
       style="
         width: 100%;
-        max-width: 850px;
+        max-width: 830px;
         border: 0px;
         border-spacing: 0px;
         border-collapse: separate;
@@ -40,7 +40,7 @@
       <tbody>
         <tr style="padding: 0px">
           <td style="padding: 0px">
-            <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0px">
+            <header style="display: flex; justify-content: space-between; align-items: center; padding: 0px 0px">
               <h2>Rohan's Blog</h2>
               <nav style="text-align: right">
                 <h2 style="display: inline; text-decoration: none">
@@ -48,9 +48,50 @@
                 </h2>
               </nav>
             </header>
+            <p style="text-align: left; padding: 0px 0">March 1, 2024</p>
             <zero-md>
               <script type="text/markdown">
-                Pushed too early.
+                # Long Context and the Video Playbook
+
+                Two weeks ago, three new models gave us a very concrete glimpse into the future of AI: Google’s Gemini 1.5, OpenAI’s Sora, and the Large World Model (LWM) from Berkeley. Gemini’s and LWM’s coolest demos used the new 1 million context length to find and answer details about hour-long Youtube uploads, and Sora stunned everyone with temporally coherent and high-res videos.
+
+                Video is the new frontier. And while video understanding and generation are currently handled by different architectures, we’re racing towards a future where a single model will be able to both ingest and output text, images, and video. Unifying ingestion and generation would immediately unlock a huge set of interactions. Imagine generating a house tour video based on a floorplan image and interior design description. Or, imagine a home assistance robot observing its environment through its camera and interacting intelligently with its users.
+
+                In this short post, I’ll note the important pieces for building this unified model for video.
+
+                ## Part 1: Long-form video understanding.
+
+                Current models, including Gemini, still struggle to process a lot of video frames. The solution to reasoning over truly long video may involve incorporating new architectures like state space models (SSMs). To understand why, let’s first discuss the current vision-language model recipe, what its limitations are, and how SSMs may fix them.
+
+                Building a vision-language model has somewhat standardized around the LLaVA method: a sequence of frames is fed through an image or video encoder (usually based off CLIP), and the resulting features are then passed in as dense “tokens” to a pretrained LLM. Importantly, this means that the number of tokens the LLM needs to handle is directly proportional to the number of input frames, which can grow quickly\*.
+
+                How would adding an SSM fix this? SSMs, like any recurrent architecture, summarize many tokens into one shared state. In an information-dense modality like language, where all SSMs are currently applied, this naturally means that a significant amount of information is lost. Video, however, is definitely not information dense; it has lots of repetition across frames, and most significant bits encode low-level details like textures. This means that a video is very amenable to being summarized by an SSM - imagine being able to process a continual video stream, at 30 FPS, for hours!
+
+                What would this look like, concretely? There are many possible solutions, but a simple one would be to pretrain an SSM-based video encoder (using a VAE, MAE, and/or a text-contrastive objective). This encoder would process large video(s) and produce a much smaller set of output tokens to feed into the base LLM\*\*, enabling better performance.
+
+                ## Part 2: Adding video generation.
+
+                Naturally, the next step is to allow the model to generate video as well; this unification means that generation can become much more expressive. Techniques like chain of thought or self-consistency have become very important for language tasks, as they allow us to trade inference compute for quality. What is the equivalent of these for video generation? For example, we could ask the model to first generate what each of the main characters look like in a short film, and then ask it to create the rest of the film. Or create concepts for each shot first before stitching them together.
+
+                There are a couple important pieces to making this happen. First, Sora shows that a well-trained video tokenizer matters. The encoder we discussed in Part 1 may work well for this as well. Second, we need to decide on a structure for the base LLM to output video. The LWM approach is to output discrete video tokens autoregressively; however, it does seem like the best video and image generation models use diffusion as the core primitive instead. So it does seem natural to combine the two, and one possible exciting solution is to have the base LLM autoregressively output the conditioning vectors that are then fed into a separate pretrained diffusion model to generate the final video.
+
+                ## Part 3: Datasets.
+
+                We’re covering this last, but data is the most important piece for making this work. Although the internet has lots of videos, current ways of training vision models (both for understanding and for generation) require not only videos but also captions describing the videos. Existing datasets scraped from the internet or YouTube don’t meet this need, because the caption quality is quite poor. For example the largest current video datasets are: InternVid10M, which has captions generated from a captioning model; WebVid2M, which uses video searches and tags; and HowTo100M, which has higher quality narrations but are often irrelevant or time-misaligned with the video frames.
+
+                Recent datasets, such as Video-ChatGPT or Valley-Instruct, provide much more detailed, grounded captions on a small set of videos. They work by using a captioning model in-the-loop to generate information at a frame-level, using ChatGPT to aggregate and post-process the pieces into one caption, and then performing an optional manual review phase.
+
+                Scaling up these approaches for partially synthetic data construction will be increasingly important for creating large training sets. For example, one could train a high-quality video captioner based on a smaller set of manually reviewed data, and use it to automatically caption larger and larger sets of videos for training. Sora’s data pipeline uses a version of this approach, and tuning the pre- and post- processing parameters with scale will be necessary.
+
+                ## Concluding thoughts.
+
+                This post was written as a set of ideas I’m excited about for training the next generation of video-based models. The concrete plans in here would be very interesting to execute. However, I am also happy to be proven wrong 😄. At the end of the day, experimentation and solid scaling laws science will dictate the way forwards.
+
+                Huge thanks to Thomas Liao, Archit Sharma, Zane Durante, Tatsu Hashimoto, Yu Sun, and Daniel Geng for feedback on earlier drafts of this post.
+
+                \*Gemini sideteps this by sampling input videos at 1 frame per second, which still maxes out its 1M context in an hour of video.
+                <br>
+                \*\*Choosing between SSM and attention layers sounds like a hard distinction, but a group of labmates at Stanford are working on a unified perspective of the two!
               </script>
             </zero-md>
           </td>
