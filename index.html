@@ -105,6 +105,16 @@
               </tr>
 
           <div id="papersList">
+            <script>
+              function boldAuthorName() {
+                var papers = document.querySelectorAll('.paper');
+                papers.forEach(function(paper) {
+                  paper.innerHTML = paper.innerHTML.replace(/Rohan Taori\*/g, '<b>Rohan Taori*</b>');
+                  paper.innerHTML = paper.innerHTML.replace(/Rohan Taori(?!\*)/g, '<b>Rohan Taori</b>');
+                });
+              }
+              document.addEventListener('DOMContentLoaded', boldAuthorName);
+            </script>
             <table
               style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
               <tbody>
@@ -147,7 +157,7 @@
                     Yonatan Bitton*, Hritik Bansal*, Jack Hessel*, Rulin Shao, Wanrong Zhu, Anas Awadalla, Josh Gardner,
                     Rohan Taori, Ludwig Schimdt
                     <br>
-                    <em>Benchmarks and Datasets Track, NeurIPS, 2023.</em>
+                    <em>NeurIPS Benchmarks and Datasets, 2023.</em>
                     <br>
                     <a href="https://arxiv.org/abs/2308.06595">Paper</a> &nbsp/&nbsp
                     <a href="https://visit-bench.github.io/">Website</a> &nbsp/&nbsp
@@ -174,8 +184,7 @@
                     Yann Dubois*, Xuechen Li*, Rohan Taori*, Tianyi Zhang*, Ishaan Gulrajani, Jimmy Ba, Carlos Guestrin,
                     Percy Liang, Tatsunori B Hashimoto
                     <br>
-                    <em><b>Spotlight</b> at Advances in Neural Information Processing Systems (NeurIPS),
-                      2023.</em>
+                    <em><b>Spotlight</b> at NeurIPS, 2023.</em>
                     <br>
                     <a href="https://arxiv.org/abs/2305.14387">Paper</a> &nbsp/&nbsp
                     <a href="https://crfm.stanford.edu/2023/05/22/alpaca-farm.html">Blog Post</a> &nbsp/&nbsp
@@ -201,8 +210,7 @@
                     <br>
                     Rohan Taori, Tatsunori B Hashimoto
                     <br>
-                    <em><b>Oral</b> at International Conference on Machine Learning (ICML), 2023. <b>Spotlight</b> at
-                      NeurIPS Workshop on Distribution Shifts, 2022.</em>
+                    <em><b>Oral</b> at ICML, 2023. <b>Spotlight</b> at NeurIPS Distribution Shifts Workshop, 2022.</em>
                     <br>
                     <a href="https://arxiv.org/abs/2209.03942">Paper</a> &nbsp/&nbsp
                     <a href="https://github.com/rtaori/data_feedback">Code</a>
@@ -216,7 +224,7 @@
                     <br>
                     Shibani Santurkar, Yann Dubois, Rohan Taori, Percy Liang, Tatsunori B Hashimoto
                     <br>
-                    <em>International Conference on Learning Representations (ICLR), 2023.</em>
+                    <em>ICLR, 2023.</em>
                     <br>
                     <a href="https://arxiv.org/abs/2207.07635">Paper</a>
                   </td>
@@ -251,7 +259,7 @@
                     <br>
                     Thomas Liao, Rohan Taori, Inioluwa Deborah Raji, Ludwig Schmidt
                     <br>
-                    <em>Benchmarks and Datasets Track, NeurIPS, 2021.</em>
+                    <em>NeurIPS Benchmarks and Datasets, 2021.</em>
                     <br>
                     <a href="http://thomasliao.com/are_we_learning_yet.pdf">Paper</a>
                   </td>
@@ -265,7 +273,7 @@
                     John Miller, Rohan Taori, Aditi Raghunathan, Shiori Sagawa, Pang Wei Koh, Vaishaal
                     Shankar, Percy Liang, Yair Carmon, Ludwig Schmidt
                     <br>
-                    <em>International Conference on Machine Learning (ICML), 2021.</em>
+                    <em>ICML, 2021.</em>
                     <br>
                     <a href="https://arxiv.org/abs/2107.04649">Paper</a> &nbsp/&nbsp
                     <a
@@ -284,8 +292,7 @@
                     Rohan Taori, Achal Dave, Vaishaal Shankar, Nicholas Carlini, Benjamin Recht, Ludwig
                     Schmidt
                     <br>
-                    <em><b>Spotlight</b> at Advances in Neural Information Processing Systems (NeurIPS),
-                      2020.</em>
+                    <em><b>Spotlight</b> at NeurIPS, 2020.</em>
                     <br>
                     <a href="https://arxiv.org/abs/2007.00644">Paper</a> &nbsp/&nbsp
                     <a href="https://modestyachts.github.io/imagenet-testbed">Website</a> &nbsp/&nbsp
