@@ -15,7 +15,6 @@
     gtag('config', 'UA-172347444-1');
   </script>
 
-
   <title>Rohan Taori</title>
 
   <meta name="author" content="Rohan Taori">
@@ -89,17 +88,17 @@
                       color: white;
                     }
                   </style>
-                  <button id="allButton" class="selectedButton" onclick="filterPapers('all'); highlightButton('allButton')">All</button>
-                  <button id="highlightsButton" onclick="filterPapers('highlights'); highlightButton('highlightsButton')">Highlights</button>
+                  <button id="allButton" onclick="filterPapers('all'); highlightButton('allButton')">All</button>
+                  <button id="highlightsButton" class="selectedButton" onclick="filterPapers('highlights'); highlightButton('highlightsButton')">Highlights</button>
                   <script>
                     function highlightButton(buttonId) {
                       document.getElementById('allButton').classList.remove('selectedButton');
                       document.getElementById('highlightsButton').classList.remove('selectedButton');
                       document.getElementById(buttonId).classList.add('selectedButton');
                     }
-                    // Call highlightButton on page load to ensure "All" button is highlighted by default
                     document.addEventListener('DOMContentLoaded', function() {
-                      highlightButton('allButton');
+                      highlightButton('highlightsButton');
+                      filterPapers('highlights');
                     }, false);
                   </script>
                 </td>
