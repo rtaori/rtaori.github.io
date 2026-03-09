@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#ffffff">
+  <title>INR Finger Tracker</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f2f2f7;
+      color: #1c1c1e;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px 16px;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 20px 0 8px;
+    }
+    .header-icon {
+      font-size: 50px;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    /* Suggestion card */
+    .suggestion-card {
+      background: #e5e5ea;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin: 24px 0;
+    }
+    .suggestion-card .label {
+      font-size: 14px;
+      color: #8e8e93;
+      margin-bottom: 12px;
+    }
+    .suggestion-card .main {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .suggestion-card .sub {
+      font-size: 20px;
+      color: #8e8e93;
+    }
+
+    /* Segmented controls */
+    .pickers { margin: 8px 0; }
+    .pickers .label {
+      font-size: 14px;
+      color: #8e8e93;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .segment-group { margin-bottom: 12px; }
+    .segment {
+      display: flex;
+      background: #e5e5ea;
+      border-radius: 8px;
+      padding: 2px;
+    }
+    .segment button {
+      flex: 1;
+      padding: 8px 4px;
+      border: none;
+      background: transparent;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1c1c1e;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .segment button.active {
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    .spacer { flex: 1; }
+
+    /* Buttons */
+    .btn-record {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #007aff;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .btn-record:active { background: #0062cc; }
+    .btn-history {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 500;
+      cursor: pointer;
+      background: #e5e5ea;
+      color: #1c1c1e;
+      margin-bottom: 20px;
+    }
+
+    /* History modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #f2f2f7;
+      z-index: 100;
+      flex-direction: column;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid #d1d1d6;
+      background: #f2f2f7;
+    }
+    .modal-header h2 { font-size: 17px; font-weight: 600; }
+    .modal-header button {
+      background: none;
+      border: none;
+      color: #007aff;
+      font-size: 17px;
+      cursor: pointer;
+    }
+    .history-list {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .history-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: #8e8e93;
+    }
+    .history-empty .icon { font-size: 50px; margin-bottom: 12px; }
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #d1d1d6;
+      background: #fff;
+    }
+    .history-item .info .title { font-size: 17px; font-weight: 600; }
+    .history-item .info .date { font-size: 15px; color: #8e8e93; margin-top: 2px; }
+    .history-item .delete-btn {
+      background: none;
+      border: none;
+      color: #ff3b30;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    /* Confirmation toast */
+    .toast {
+      position: fixed;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #34c759;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 17px;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 200;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="toast" id="toast">Recorded!</div>
+
+  <div class="container" id="main-view">
+    <div class="header">
+      <div class="header-icon">&#9757;</div>
+      <h1>INR Finger Tracker</h1>
+    </div>
+
+    <div class="suggestion-card">
+      <div class="label">Next Suggested Finger</div>
+      <div class="main" id="suggestion-main">Left Thumb</div>
+      <div class="sub" id="suggestion-sub">Front side</div>
+    </div>
+
+    <div class="pickers">
+      <div class="label">Adjust if needed:</div>
+
+      <div class="segment-group">
+        <div class="segment" id="hand-picker" data-field="hand">
+          <button class="active" data-value="Left">Left</button>
+          <button data-value="Right">Right</button>
+        </div>
+      </div>
+
+      <div class="segment-group">
+        <div class="segment" id="finger-picker" data-field="finger">
+          <button class="active" data-value="Thumb">Thumb</button>
+          <button data-value="Index">Index</button>
+          <button data-value="Middle">Middle</button>
+          <button data-value="Ring">Ring</button>
+          <button data-value="Pinky">Pinky</button>
+        </div>
+      </div>
+
+      <div class="segment-group">
+        <div class="segment" id="side-picker" data-field="side">
+          <button class="active" data-value="Front">Front</button>
+          <button data-value="Back">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <button class="btn-record" onclick="recordPrick()">&#10003; Record Prick</button>
+    <button class="btn-history" onclick="openHistory()">&#128340; View History</button>
+  </div>
+
+  <div class="modal-overlay" id="history-modal">
+    <div class="modal-header">
+      <button onclick="closeHistory()">Done</button>
+      <h2>History</h2>
+      <div style="width:40px"></div>
+    </div>
+    <div class="history-list" id="history-list"></div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'fingerPrickHistory';
+    const HANDS = ['Left', 'Right'];
+    const FINGERS = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky'];
+    const SIDES = ['Front', 'Back'];
+
+    let selected = { hand: 'Left', finger: 'Thumb', side: 'Front' };
+
+    function getHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch { return []; }
+    }
+
+    function saveHistory(history) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    }
+
+    function getNextSuggestion() {
+      const history = getHistory();
+      if (history.length === 0) return { hand: 'Left', finger: 'Thumb', side: 'Front' };
+
+      const last = history[0];
+      const hi = HANDS.indexOf(last.hand);
+      const fi = FINGERS.indexOf(last.finger);
+      const si = SIDES.indexOf(last.side);
+
+      let nh = hi, nf = (fi + 1) % FINGERS.length, ns = si;
+      if (nf === 0) {
+        nh = (hi + 1) % HANDS.length;
+        if (nh === 0) ns = (si + 1) % SIDES.length;
+      }
+      return { hand: HANDS[nh], finger: FINGERS[nf], side: SIDES[ns] };
+    }
+
+    function updateSuggestion() {
+      const s = getNextSuggestion();
+      selected = { ...s };
+      document.getElementById('suggestion-main').textContent = `${s.hand} ${s.finger}`;
+      document.getElementById('suggestion-sub').textContent = `${s.side} side`;
+      syncPickers();
+    }
+
+    function syncPickers() {
+      document.querySelectorAll('.segment').forEach(seg => {
+        const field = seg.dataset.field;
+        seg.querySelectorAll('button').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.value === selected[field]);
+        });
+      });
+    }
+
+    // Picker event listeners
+    document.querySelectorAll('.segment').forEach(seg => {
+      seg.addEventListener('click', e => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const field = seg.dataset.field;
+        selected[field] = btn.dataset.value;
+        syncPickers();
+        document.getElementById('suggestion-main').textContent = `${selected.hand} ${selected.finger}`;
+        document.getElementById('suggestion-sub').textContent = `${selected.side} side`;
+      });
+    });
+
+    function recordPrick() {
+      const history = getHistory();
+      history.unshift({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2),
+        date: new Date().toISOString(),
+        hand: selected.hand,
+        finger: selected.finger,
+        side: selected.side
+      });
+      saveHistory(history);
+
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+        updateSuggestion();
+      }, 1200);
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+        + ' at ' + d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+    }
+
+    function openHistory() {
+      const history = getHistory();
+      const list = document.getElementById('history-list');
+
+      if (history.length === 0) {
+        list.innerHTML = '<div class="history-empty"><div class="icon">&#128230;</div><div>No records yet</div></div>';
+      } else {
+        list.innerHTML = history.map((p, i) => `
+          <div class="history-item">
+            <div class="info">
+              <div class="title">${p.hand} ${p.finger} (${p.side})</div>
+              <div class="date">${formatDate(p.date)}</div>
+            </div>
+            <button class="delete-btn" onclick="deletePrick(${i})">&times;</button>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById('history-modal').classList.add('open');
+    }
+
+    function closeHistory() {
+      document.getElementById('history-modal').classList.remove('open');
+    }
+
+    function deletePrick(index) {
+      const history = getHistory();
+      history.splice(index, 1);
+      saveHistory(history);
+      openHistory();
+      updateSuggestion();
+    }
+
+    updateSuggestion();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+</body>
+</html>
